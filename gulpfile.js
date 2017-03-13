@@ -23,4 +23,13 @@ gulp.task('sass:watch', function () {
 gulp.task('clean', function () {
   return del('public');
 });
-gulp.task('build', gulp.series ('clean','sass'))
+
+gulp.task('assets', function () {
+  return gulp.src('frontend/assets/**')
+  .pipe(gulp.dest('public'))
+})
+
+gulp.task('build', gulp.series(
+  'clean',
+  gulp.parallel('sass', 'assets'))
+)
