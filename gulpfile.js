@@ -25,9 +25,9 @@ gulp.task('clean', function () {
 });
 
 gulp.task('assets', function () {
-  return gulp.src('frontend/assets/**')
+  return gulp.src('frontend/assets/**',{since:gulp.lastRun('assets')})
   .pipe(debug({title: "assets"}))
-  .pipe(gulp.dest('public'))
+  .pipe(gulp.dest('./public'))
 })
 
 gulp.task('build', gulp.series(
@@ -35,4 +35,4 @@ gulp.task('build', gulp.series(
   gulp.parallel('sass', 'assets'))
 )
 gulp.watch("frontend/sass/**/*.scss", gulp.series('sass'));
-// gulp.watch("frontend/assets/**", gulp.series('assets'));
+gulp.watch("frontend/assets/**", gulp.series('assets'));

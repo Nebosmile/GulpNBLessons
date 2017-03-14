@@ -1,4 +1,6 @@
+$red : rgb(170, 57, 15);
 a{
-    color: #622d2d;
-    padding: 30px;
+    color: $red;
+    padding: 90px;
+    margin: 10px;
 }
