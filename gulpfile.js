@@ -13,7 +13,7 @@ gulp.task('sass', function () {
     .pipe(debug({title:'src'}))
     .pipe(sass().on('error', sass.logError))
     .pipe(sourcemaps.write())
-    .pipe(gulp.dest('./public/css'))
+    .pipe(gulp.dest('public/css'))
 
 });
 gulp.task('sass:watch', function () {
@@ -25,14 +25,19 @@ gulp.task('clean', function () {
 });
 
 gulp.task('assets', function () {
-  return gulp.src('frontend/assets/**',{since:gulp.lastRun('assets')})
+  return gulp.src('frontend/assets/**', {since:gulp.lastRun('assets')})
   .pipe(debug({title: "assets"}))
-  .pipe(gulp.dest('./public'))
+  .pipe(gulp.dest('public'))
 })
 
 gulp.task('build', gulp.series(
   'clean',
   gulp.parallel('sass', 'assets'))
 )
-gulp.watch("frontend/sass/**/*.scss", gulp.series('sass'));
-gulp.watch("frontend/assets/**", gulp.series('assets'));
+
+gulp.task('watch', function () {
+    gulp.watch("frontend/sass/**/*.scss", gulp.series('sass'));
+    gulp.watch("frontend/assets/**", gulp.series('assets'));
+});
+
+gulp.task('dev', gulp.series('build', 'watch'));
