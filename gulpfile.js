@@ -26,6 +26,7 @@ gulp.task('clean', function () {
 
 gulp.task('assets', function () {
   return gulp.src('frontend/assets/**')
+  .pipe(debug({title: "assets"}))
   .pipe(gulp.dest('public'))
 })
 
@@ -33,3 +34,5 @@ gulp.task('build', gulp.series(
   'clean',
   gulp.parallel('sass', 'assets'))
 )
+gulp.watch("frontend/sass/**/*.scss", gulp.series('sass'));
+// gulp.watch("frontend/assets/**", gulp.series('assets'));
