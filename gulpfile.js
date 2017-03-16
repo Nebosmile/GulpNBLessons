@@ -10,6 +10,7 @@ var remember = require('gulp-remember');
 var path = require('path');
 var cached = require('gulp-cached');
 var browserSync = require('browser-sync').create();
+var notify = require('gulp-notify');
 
 
 gulp.task('sass', function() {
@@ -18,7 +19,14 @@ gulp.task('sass', function() {
         .pipe(debug({
             title: 'src'
         }))
-        .pipe(sass().on('error', sass.logError))
+        .pipe(sass())
+        // .on('error', sass.logError)
+        .on('error', notify.onError(function(err) {
+            return{
+                title:"Sass",
+                message:err.message
+            };
+        }))
         .pipe(sourcemaps.write())
         .pipe(gulp.dest('public/css'))
 
